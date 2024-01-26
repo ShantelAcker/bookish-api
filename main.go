@@ -21,23 +21,26 @@ var bookLists = []bookList{
 }
 
 // GET Handlers
+
+// GET all bookLists
 func getBookLists(c *gin.Context) {
 	c.JSON(http.StatusOK, bookLists)
 }
 
-// middleware for getting any book's ID
-func bookId(id string) (*bookList, error) {
+// middleware for getting any booklist ID
+func bookListId(id string) (*bookList, error) {
 	for i, b := range bookLists {
 		if b.ID == id {
 			return &bookLists[i], nil
 		}
 	}
-	return nil, errors.New("book not found")
+	return nil, errors.New("booklist not found")
 }
 
+// GET a single booklist by ID
 func getBookListById(c *gin.Context) {
 	id := c.Param("id")
-	bookList, err := bookId(id)
+	bookList, err := bookListId(id)
 
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"message": "booklist not found"})
@@ -48,12 +51,22 @@ func getBookListById(c *gin.Context) {
 
 // POST Handlers
 func createBookList(c *gin.Context) {
+	var newBookList bookList
 
+	// bind JSON response to bookList
+	if err := c.BindJSON(&newBookList); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+	bookLists = append(bookLists, newBookList)
+	c.JSON(http.StatusCreated, newBookList)
 }
 
 func main() {
 	router := gin.Default()
 	router.GET("/booklists", getBookLists)
 	router.GET("/booklists/:id", getBookListById)
+	router.POST("/booklists", createBookList)
 	router.Run("localhost:8080")
 }
