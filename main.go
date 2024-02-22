@@ -9,16 +9,32 @@ import (
 )
 
 type bookList struct {
-	ID         string    `json:"id"`
-	Name       string    `json:"name"`
-	DTMCreated time.Time `json:"dtmcreated"`
+	BooklistID    string    `json:"booklistID"`
+	BooklistName  string    `json:"booklistName"`
+	DTMCreated    time.Time `json:"dtmcreated"`
+	BooklistBooks []book    `json:"booklistBooks"`
+}
+
+type book struct {
+	BookID      string    `json:"bookID"`
+	BookTitle   string    `json:"bookTitle"`
+	DTMAdded    time.Time `json:"dtmadded"`
+	BookAuthors []author  `json:"bookAuthors"`
+}
+
+type author struct {
+	AuthorID   string `json:"authorID"`
+	BookID     string `json:"bookID"`
+	AuthorName string `json:"authorName"`
 }
 
 var bookLists = []bookList{
-	{ID: "1", Name: "Want to Read", DTMCreated: time.Now()},
-	{ID: "2", Name: "Reading", DTMCreated: time.Now()},
-	{ID: "3", Name: "Finished", DTMCreated: time.Now()},
+	{BooklistID: "1", BooklistName: "Want to Read", DTMCreated: time.Now(), BooklistBooks: books},
+	{BooklistID: "2", BooklistName: "Reading", DTMCreated: time.Now()},
+	{BooklistID: "3", BooklistName: "Finished", DTMCreated: time.Now()},
 }
+
+var books = []book{{BookTitle: "Percy Jackson"}}
 
 // GET Handlers
 
@@ -30,7 +46,7 @@ func getBookLists(c *gin.Context) {
 // middleware for getting any booklist ID
 func bookListId(id string) (*bookList, error) {
 	for i, b := range bookLists {
-		if b.ID == id {
+		if b.BooklistID == id {
 			return &bookLists[i], nil
 		}
 	}
@@ -56,8 +72,8 @@ func createBookList(c *gin.Context) {
 	// bind JSON response to bookList
 	if err := c.BindJSON(&newBookList); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-        return
-    }
+		return
+	}
 
 	bookLists = append(bookLists, newBookList)
 	c.JSON(http.StatusCreated, newBookList)
