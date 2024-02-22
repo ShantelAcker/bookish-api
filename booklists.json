@@ -1,0 +1,20 @@
+[
+  {
+    "booklistID":"1",
+    "booklistName":"Want to Read",
+    "dtmcreated":"2024-02-21T19:08:48.7037246-06:00",
+    "booklistBooks": [
+      {
+        "bookID": "1",
+        "bookTitle": "Percy Jackson",
+        "bookAuthors": [
+          {
+            "authorID": "1",
+            "bookID": "1",
+            "authorName": "Rick Riordan"
+          }
+        ]
+      }
+    ]
+  }
+]

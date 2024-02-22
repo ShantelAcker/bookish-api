@@ -1,10 +1,15 @@
 package main
 
 import (
+	// built-ins
+	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
+	"os"
 	"time"
 
+	// 3rd party
 	"github.com/gin-gonic/gin"
 )
 
@@ -28,13 +33,7 @@ type author struct {
 	AuthorName string `json:"authorName"`
 }
 
-var bookLists = []bookList{
-	{BooklistID: "1", BooklistName: "Want to Read", DTMCreated: time.Now(), BooklistBooks: books},
-	{BooklistID: "2", BooklistName: "Reading", DTMCreated: time.Now()},
-	{BooklistID: "3", BooklistName: "Finished", DTMCreated: time.Now()},
-}
-
-var books = []book{{BookTitle: "Percy Jackson"}}
+var bookLists = []bookList{}
 
 // GET Handlers
 
@@ -80,6 +79,17 @@ func createBookList(c *gin.Context) {
 }
 
 func main() {
+	// reading in a dummy JSON file payload
+	content, err := os.ReadFile("booklists.json")
+	if err != nil {
+		fmt.Println("unable to read json file")
+	}
+	err = json.Unmarshal(content, &bookLists)
+	if err != nil {
+		fmt.Println("unable to unmarshal json")
+	}
+	fmt.Println(bookLists[0].BooklistBooks[0].BookAuthors[0].AuthorName)
+
 	router := gin.Default()
 	router.GET("/booklists", getBookLists)
 	router.GET("/booklists/:id", getBookListById)
