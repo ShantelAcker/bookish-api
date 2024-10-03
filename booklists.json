@@ -1,20 +1,46 @@
 [
   {
-    "booklistID":"1",
-    "booklistName":"Want to Read",
-    "dtmcreated":"2024-02-21T19:08:48.7037246-06:00",
-    "booklistBooks": [
-      {
-        "bookID": "1",
-        "bookTitle": "Percy Jackson",
-        "bookAuthors": [
+      "booklistID": "1",
+      "booklistName": "Want to Read",
+      "dtmcreated": "2024-02-21T19:08:48.7037246-06:00",
+      "booklistBooks": [
           {
-            "authorID": "1",
-            "bookID": "1",
-            "authorName": "Rick Riordan"
+              "bookID": "1",
+              "bookTitle": "Percy Jackson",
+              "dtmadded": "0001-01-01T00:00:00Z",
+              "bookAuthors": [
+                  {
+                      "authorID": "1",
+                      "bookID": "1",
+                      "authorName": "Rick Riordan"
+                  }
+              ]
           }
-        ]
-      }
-    ]
+      ]
+  },
+  {
+      "booklistID": "2",
+      "booklistName": "Reading",
+      "dtmcreated": "2024-10-01T19:08:48.7037246-06:00",
+      "booklistBooks": [
+          {
+              "bookID": "2",
+              "bookTitle": "Yes",
+              "dtmadded": "2024-10-01T19:08:48.7037246-06:00",
+              "bookAuthors": [
+                  {
+                      "authorID": "2",
+                      "bookID": "2",
+                      "authorName": "SpongeBob SquarePants"
+                  }
+              ]
+          }
+      ]
+  },
+  {
+      "booklistID": "3",
+      "booklistName": "Finished",
+      "dtmcreated": "2024-10-01T19:08:48.7037246-06:00",
+      "booklistBooks": []
   }
 ]
